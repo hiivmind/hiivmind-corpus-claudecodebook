@@ -1,0 +1,576 @@
+entries:
+  - id: "claude-code-from-source:ch01-architecture.md"
+    source: claude-code-from-source
+    path: "ch01-architecture.md"
+    title: "The Architecture of an AI Agent"
+    summary: "Six core abstractions (query loop, tool system, tasks, state, memory, hooks), the golden path from keystroke to output, permission system with seven modes, multi-provider architecture, and build system"
+    tags: [architecture, overview, query-loop, tool-system, tasks, state, memory, hooks, permissions]
+    keywords: [query.ts, Tool.ts, Task.ts, STATE, AppState, CLAUDE.md, hooks, REPL, async-generator, permission-modes, multi-provider, Bedrock, Vertex]
+    concepts: ["core-architecture"]
+    category: guide
+    content_type: markdown
+    size: standard
+    grep_hint: null
+    headings:
+      - anchor: "the-six-key-abstractions"
+        title: "The Six Key Abstractions"
+      - anchor: "the-golden-path-from-keystroke-to-output"
+        title: "The Golden Path: From Keystroke to Output"
+      - anchor: "the-permission-system"
+        title: "The Permission System"
+      - anchor: "multi-provider-architecture"
+        title: "Multi-Provider Architecture"
+      - anchor: "the-build-system"
+        title: "The Build System"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch02-bootstrap.md"
+    source: claude-code-from-source
+    path: "ch02-bootstrap.md"
+    title: "Starting Fast -- The Bootstrap Pipeline"
+    summary: "Five-phase startup pipeline under 300ms budget: fast-path dispatch, module-level I/O parallelism, trust boundary, parallel setup, and seven launch paths converging in replLauncher"
+    tags: [bootstrap, startup, performance, trust-boundary, initialization]
+    keywords: [cli.tsx, main.tsx, init.ts, setup.ts, replLauncher.ts, fast-path, MDM, keychain, Commander, preAction, trust-dialog, migration]
+    concepts: ["bootstrap"]
+    category: guide
+    content_type: markdown
+    size: standard
+    grep_hint: null
+    headings:
+      - anchor: "the-shape-of-the-pipeline"
+        title: "The Shape of the Pipeline"
+      - anchor: "phase-0-fast-path-dispatch"
+        title: "Phase 0: Fast-Path Dispatch"
+      - anchor: "phase-1-module-level-io"
+        title: "Phase 1: Module-Level I/O"
+      - anchor: "phase-2-parse-and-trust"
+        title: "Phase 2: Parse and Trust"
+      - anchor: "phase-3-setup"
+        title: "Phase 3: Setup"
+      - anchor: "phase-4-launch"
+        title: "Phase 4: Launch"
+      - anchor: "the-startup-timeline"
+        title: "The Startup Timeline"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch03-state.md"
+    source: claude-code-from-source
+    path: "ch03-state.md"
+    title: "State -- The Two-Tier Architecture"
+    summary: "Mutable process singleton (STATE, ~80 fields) for infrastructure and minimal reactive store (34-line Zustand-like) for UI, connected by centralized onChange side effects. Covers sticky latches, context building, and cost tracking"
+    tags: [state, architecture, reactive-store, singleton, cache, cost-tracking]
+    keywords: [STATE, AppState, bootstrap, getInitialState, makeStore, useSyncExternalStore, onChangeAppState, sticky-latch, promptCache1hEligible, context.ts, memoize, cost-tracking, reservoir-sampling]
+    concepts: ["core-architecture"]
+    category: guide
+    content_type: markdown
+    size: standard
+    grep_hint: null
+    headings:
+      - anchor: "bootstrap-state-the-process-singleton"
+        title: "Bootstrap State -- The Process Singleton"
+      - anchor: "appstate-the-reactive-store"
+        title: "AppState -- The Reactive Store"
+      - anchor: "how-the-two-tiers-relate"
+        title: "How the Two Tiers Relate"
+      - anchor: "side-effects-onchangeappstate"
+        title: "Side Effects: onChangeAppState"
+      - anchor: "context-building"
+        title: "Context Building"
+      - anchor: "cost-tracking"
+        title: "Cost Tracking"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch04-api-layer.md"
+    source: claude-code-from-source
+    path: "ch04-api-layer.md"
+    title: "Talking to Claude -- The API Layer"
+    summary: "Multi-provider client factory, system prompt construction with dynamic boundary marker for cache optimization, streaming with idle watchdog, three-tier prompt caching, and the queryModel generator with retry strategies"
+    tags: [api, streaming, prompt-cache, multi-provider, system-prompt, retry]
+    keywords: [getAnthropicClient, callModel, queryModel, buildFetch, system-prompt, dynamic-boundary, DANGEROUS_uncachedSystemPromptSection, watchdog, SSE, non-streaming-fallback, cache-scope, beta-headers]
+    concepts: ["api-and-caching"]
+    category: guide
+    content_type: markdown
+    size: standard
+    grep_hint: null
+    headings:
+      - anchor: "the-multi-provider-client-factory"
+        title: "The Multi-Provider Client Factory"
+      - anchor: "system-prompt-construction"
+        title: "System Prompt Construction"
+      - anchor: "streaming"
+        title: "Streaming"
+      - anchor: "prompt-cache-system"
+        title: "Prompt Cache System"
+      - anchor: "the-querymodel-generator"
+        title: "The queryModel Generator"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch05-agent-loop.md"
+    source: claude-code-from-source
+    path: "ch05-agent-loop.md"
+    title: "The Agent Loop"
+    summary: "The 1,730-line query() async generator: loop body, four context compression layers (tool result budget, snip compact, microcompact, auto-compact), model streaming with withholding pattern, error recovery escalation ladder, token budgets, and stop hooks"
+    tags: [agent-loop, query, context-management, compaction, error-recovery, streaming]
+    keywords: [query.ts, queryLoop, LoopState, Terminal, Continue, auto-compact, reactive-compact, microcompact, snip-compact, context-collapse, withholding, death-spiral-guard, token-budget, stop-hooks, maxTurns, dependency-injection]
+    concepts: ["core-architecture"]
+    category: guide
+    content_type: markdown
+    size: standard
+    grep_hint: null
+    headings:
+      - anchor: "why-an-async-generator"
+        title: "Why an Async Generator"
+      - anchor: "the-loop-body"
+        title: "The Loop Body"
+      - anchor: "context-management-four-compression-layers"
+        title: "Context Management: Four Compression Layers"
+      - anchor: "model-streaming"
+        title: "Model Streaming"
+      - anchor: "error-recovery-the-escalation-ladder"
+        title: "Error Recovery: The Escalation Ladder"
+      - anchor: "token-budgets"
+        title: "Token Budgets"
+      - anchor: "stop-hooks-forcing-the-model-to-keep-working"
+        title: "Stop Hooks"
+      - anchor: "apply-this-building-your-own-agent-loop"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch06-tools.md"
+    source: claude-code-from-source
+    path: "ch06-tools.md"
+    title: "Tools -- From Definition to Execution"
+    summary: "The Tool interface with three type parameters, buildTool() fail-closed defaults, 14-step execution pipeline, seven permission modes with resolution chain, tool deferred loading, result budgeting, and individual tool highlights (Bash, Edit, Read, Grep, Agent)"
+    tags: [tools, permissions, execution-pipeline, tool-interface, bash-tool, edit-tool]
+    keywords: [Tool, buildTool, isConcurrencySafe, checkPermissions, validateInput, ToolResult, ToolUseContext, assembleToolPool, BashTool, FileEditTool, FileReadTool, GrepTool, AgentTool, deferred-loading, result-budgeting, maxResultSizeChars]
+    concepts: ["tool-system"]
+    category: reference
+    content_type: markdown
+    size: standard
+    grep_hint: null
+    headings:
+      - anchor: "the-tool-interface"
+        title: "The Tool Interface"
+      - anchor: "the-registry"
+        title: "The Registry"
+      - anchor: "the-14-step-execution-pipeline"
+        title: "The 14-Step Execution Pipeline"
+      - anchor: "the-permission-system"
+        title: "The Permission System"
+      - anchor: "tool-deferred-loading"
+        title: "Tool Deferred Loading"
+      - anchor: "result-budgeting"
+        title: "Result Budgeting"
+      - anchor: "individual-tool-highlights"
+        title: "Individual Tool Highlights"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch07-concurrency.md"
+    source: claude-code-from-source
+    path: "ch07-concurrency.md"
+    title: "Concurrent Tool Execution"
+    summary: "Partition algorithm for concurrent vs serial tool batches, batch execution with bounded concurrency, StreamingToolExecutor for speculative execution during model streaming, order-preserving result harvesting, and the interrupt behavior contract"
+    tags: [concurrency, streaming-executor, tool-execution, parallelism, speculative-execution]
+    keywords: [partitionToolCalls, StreamingToolExecutor, isConcurrencySafe, runTools, runToolsConcurrently, addTool, processQueue, getCompletedResults, getRemainingResults, interruptBehavior, contextModifiers, discard]
+    concepts: ["tool-system"]
+    category: guide
+    content_type: markdown
+    size: standard
+    grep_hint: null
+    headings:
+      - anchor: "the-partition-algorithm"
+        title: "The Partition Algorithm"
+      - anchor: "batch-execution"
+        title: "Batch Execution"
+      - anchor: "the-streaming-tool-executor"
+        title: "The Streaming Tool Executor"
+      - anchor: "tool-concurrency-properties"
+        title: "Tool Concurrency Properties"
+      - anchor: "the-interrupt-behavior-contract"
+        title: "The Interrupt Behavior Contract"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch08-sub-agents.md"
+    source: claude-code-from-source
+    path: "ch08-sub-agents.md"
+    title: "Spawning Sub-Agents"
+    summary: "AgentTool definition with dynamic schema, 15-step runAgent lifecycle, six built-in agent types, model resolution chain, feature gating with 12+ flags, and the call() decision tree routing fork/builtin/custom agents"
+    tags: [sub-agents, agent-tool, lifecycle, spawning, agent-types]
+    keywords: [AgentTool, runAgent, subagent_type, run_in_background, agentDefinition, getAgentModel, fork-guard, worktree-isolation, bubble-mode, spawnTeammate, resolveAgentTools]
+    concepts: ["multi-agent"]
+    category: guide
+    content_type: markdown
+    size: large
+    grep_hint: "grep -n '^## \\|^### ' FILE"
+    headings:
+      - anchor: "the-agenttool-definition"
+        title: "The AgentTool Definition"
+      - anchor: "the-runagent-lifecycle"
+        title: "The runAgent Lifecycle"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch09-fork-agents.md"
+    source: claude-code-from-source
+    path: "ch09-fork-agents.md"
+    title: "Fork Agents and the Prompt Cache"
+    summary: "Fork agents as prompt cache exploitation mechanism: byte-identical prefix trick (threaded system prompt, exact tool passthrough, placeholder results), recursive fork prevention, sync-to-async transition, auto-backgrounding, and cache economics"
+    tags: [fork-agents, prompt-cache, cost-optimization, cache-sharing, sub-agents]
+    keywords: [fork, buildForkedMessages, forkContextMessages, renderedSystemPrompt, useExactTools, FORK_PLACEHOLDER_RESULT, fork-boilerplate, recursive-fork-prevention, auto-backgrounding, cache-economics, byte-identical]
+    concepts: ["multi-agent", "api-and-caching"]
+    category: guide
+    content_type: markdown
+    size: standard
+    grep_hint: null
+    headings:
+      - anchor: "what-a-fork-child-inherits"
+        title: "What a Fork Child Inherits"
+      - anchor: "the-byte-identical-prefix-trick"
+        title: "The Byte-Identical Prefix Trick"
+      - anchor: "the-fork-boilerplate-tag"
+        title: "The Fork Boilerplate Tag"
+      - anchor: "recursive-fork-prevention"
+        title: "Recursive Fork Prevention"
+      - anchor: "the-sync-to-async-transition"
+        title: "The Sync-to-Async Transition"
+      - anchor: "the-economics"
+        title: "The Economics"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch10-coordination.md"
+    source: claude-code-from-source
+    path: "ch10-coordination.md"
+    title: "Tasks, Coordination, and Swarms"
+    summary: "Task state machine (7 types, 5 statuses), communication patterns (foreground generator chain, background disk/notifications/messages), coordinator mode, swarm teams with SendMessage routing, and multi-agent topologies"
+    tags: [tasks, coordination, swarms, multi-agent, state-machine, background-tasks]
+    keywords: [Task.ts, TaskState, TaskType, local_agent, local_bash, in_process_teammate, SendMessage, coordinator, swarm, outputFile, pendingMessages, TaskOutputTool, BoundedUUIDSet]
+    concepts: ["multi-agent"]
+    category: guide
+    content_type: markdown
+    size: large
+    grep_hint: "grep -n '^## \\|^### ' FILE"
+    headings:
+      - anchor: "the-task-state-machine"
+        title: "The Task State Machine"
+      - anchor: "communication-patterns"
+        title: "Communication Patterns"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch11-memory.md"
+    source: claude-code-from-source
+    path: "ch11-memory.md"
+    title: "Memory -- Learning Across Conversations"
+    summary: "File-based memory system with four-type taxonomy (user, feedback, project, reference), two-step write protocol, LLM-powered recall via Sonnet side-query, staleness warnings, team memory with path traversal defense, KAIROS mode daily logs, and background extraction"
+    tags: [memory, persistence, recall, staleness, team-memory, kairos]
+    keywords: [MEMORY.md, memory-dir, scanMemoryFiles, formatMemoryManifest, sonnet-side-query, staleness, team-memory, PathTraversalError, KAIROS, dream-consolidation, background-extraction, derivability-test]
+    concepts: ["memory-and-persistence"]
+    category: guide
+    content_type: markdown
+    size: standard
+    grep_hint: null
+    headings:
+      - anchor: "the-four-type-taxonomy"
+        title: "The Four-Type Taxonomy"
+      - anchor: "the-write-path"
+        title: "The Write Path"
+      - anchor: "the-recall-path"
+        title: "The Recall Path"
+      - anchor: "staleness"
+        title: "Staleness"
+      - anchor: "team-memory"
+        title: "Team Memory"
+      - anchor: "kairos-mode"
+        title: "KAIROS Mode"
+      - anchor: "background-extraction"
+        title: "Background Extraction"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch12-extensibility.md"
+    source: claude-code-from-source
+    path: "ch12-extensibility.md"
+    title: "Extensibility -- Skills and Hooks"
+    summary: "Skills as two-phase loaded markdown commands from seven sources, hooks as lifecycle interceptors at 27+ events with four user-configurable types, snapshot security model, exit code semantics, and skill-hook integration"
+    tags: [extensibility, skills, hooks, lifecycle, security, plugins]
+    keywords: [SKILL.md, frontmatter, getPromptForCommand, PreToolUse, PostToolUse, Stop, SessionStart, captureHooksConfigSnapshot, exit-code-2, command-hooks, prompt-hooks, agent-hooks, HTTP-hooks, MCP-security-boundary]
+    concepts: ["extensibility"]
+    category: guide
+    content_type: markdown
+    size: standard
+    grep_hint: null
+    headings:
+      - anchor: "skills-teaching-the-model-new-tricks"
+        title: "Skills: Teaching the Model New Tricks"
+      - anchor: "hooks-controlling-when-things-happen"
+        title: "Hooks: Controlling When Things Happen"
+      - anchor: "the-snapshot-security-model"
+        title: "The Snapshot Security Model"
+      - anchor: "integration-where-skills-meet-hooks"
+        title: "Integration: Where Skills Meet Hooks"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch13-terminal-ui.md"
+    source: claude-code-from-source
+    path: "ch13-terminal-ui.md"
+    title: "The Terminal UI"
+    summary: "Custom terminal renderer forked from Ink: custom DOM with seven element types, React Fiber reconciler in ConcurrentRoot mode, seven-stage rendering pipeline with cell-level diffing, double-buffer rendering, and pool-based memory management for zero-GC frames"
+    tags: [terminal-ui, rendering, react, ink, performance, dom]
+    keywords: [DOMElement, yogaNode, ink-root, ink-box, ink-text, ink-raw-ansi, react-reconciler, ConcurrentRoot, Screen, Frame, double-buffer, StylePool, blit, BSU, ESU, markDirty]
+    concepts: ["terminal-and-input"]
+    category: guide
+    content_type: markdown
+    size: large
+    grep_hint: "grep -n '^## \\|^### ' FILE"
+    headings:
+      - anchor: "the-custom-dom"
+        title: "The Custom DOM"
+      - anchor: "the-react-fiber-container"
+        title: "The React Fiber Container"
+      - anchor: "the-rendering-pipeline"
+        title: "The Rendering Pipeline"
+      - anchor: "double-buffer-rendering"
+        title: "Double-Buffer Rendering and Frame Scheduling"
+      - anchor: "pool-based-memory"
+        title: "Pool-Based Memory: Why Interning Matters"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch14-input-interaction.md"
+    source: claude-code-from-source
+    path: "ch14-input-interaction.md"
+    title: "Input and Interaction"
+    summary: "Key parsing pipeline from raw bytes to actions: tokenizer with 50ms timeout, five terminal protocol parsers (CSI u/Kitty, xterm modifyOtherKeys, legacy VT, SGR mouse, bracketed paste), keybinding system with 16 contexts, chord state machine, and vim mode"
+    tags: [input, keyboard, terminal-protocols, keybindings, interaction]
+    keywords: [ParsedKey, ParsedMouse, tokenizer, CSI-u, Kitty-keyboard, modifyOtherKeys, bracketed-paste, SGR-mouse, KeybindingBlock, chord, vim-mode, TerminalQuerier, XTVERSION, stdin, raw-mode]
+    concepts: ["terminal-and-input"]
+    category: guide
+    content_type: markdown
+    size: large
+    grep_hint: "grep -n '^## \\|^### ' FILE"
+    headings:
+      - anchor: "the-key-parsing-pipeline"
+        title: "The Key Parsing Pipeline"
+      - anchor: "multi-protocol-support"
+        title: "Multi-Protocol Support"
+      - anchor: "the-keybinding-system"
+        title: "The Keybinding System"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch15-mcp.md"
+    source: claude-code-from-source
+    path: "ch15-mcp.md"
+    title: "MCP -- The Universal Tool Protocol"
+    summary: "Model Context Protocol implementation: eight transport types (stdio, HTTP, SSE, WebSocket, SDK, IDE, proxy), seven configuration scopes, tool wrapping to native Tool interface, OAuth with RFC discovery and XAA, in-process transport, connection management, and timeout architecture"
+    tags: [mcp, protocol, tools, oauth, transport, configuration]
+    keywords: [MCP, stdio, Streamable-HTTP, SSE, WebSocket, InProcessTransport, normalizeNameForMCP, OAuth, PKCE, RFC-9728, RFC-8414, XAA, claudeai-proxy, tool-wrapping, connection-states, timeout]
+    concepts: ["extensibility"]
+    category: reference
+    content_type: markdown
+    size: large
+    grep_hint: "grep -n '^## \\|^### ' FILE"
+    headings:
+      - anchor: "eight-transport-types"
+        title: "Eight Transport Types"
+      - anchor: "configuration-loading-and-scoping"
+        title: "Configuration Loading and Scoping"
+      - anchor: "tool-wrapping"
+        title: "Tool Wrapping: From MCP to Claude Code"
+      - anchor: "oauth-for-mcp-servers"
+        title: "OAuth for MCP Servers"
+      - anchor: "in-process-transport"
+        title: "In-Process Transport"
+      - anchor: "connection-management"
+        title: "Connection Management"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch16-remote.md"
+    source: claude-code-from-source
+    path: "ch16-remote.md"
+    title: "Remote Control and Cloud Execution"
+    summary: "Four remote execution topologies: Bridge v1 (poll-based), Bridge v2 (direct sessions with SSE), Direct Connect (local WebSocket server), and Upstream Proxy (credential injection in containers). Covers asymmetric read/write channels, echo deduplication, and protobuf hand-encoding"
+    tags: [remote, cloud, bridge, websocket, sse, proxy, security]
+    keywords: [remote-control, bridge-v1, bridge-v2, Direct-Connect, upstream-proxy, CCRClient, FlushGate, BoundedUUIDSet, SessionsWebSocket, protobuf, credential-injection, ptrace, session-token]
+    concepts: ["remote-execution"]
+    category: guide
+    content_type: markdown
+    size: large
+    grep_hint: "grep -n '^## \\|^### ' FILE"
+    headings:
+      - anchor: "bridge-v1"
+        title: "Bridge v1: Poll, Dispatch, Spawn"
+      - anchor: "bridge-v2"
+        title: "Bridge v2: Direct Sessions and SSE"
+      - anchor: "message-routing"
+        title: "Message Routing and Echo Deduplication"
+      - anchor: "direct-connect"
+        title: "Direct Connect: The Local Server"
+      - anchor: "upstream-proxy"
+        title: "Upstream Proxy: Credential Injection"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch17-performance.md"
+    source: claude-code-from-source
+    path: "ch17-performance.md"
+    title: "Performance -- Every Millisecond and Token Counts"
+    summary: "Five performance dimensions: startup latency (module-level I/O, API preconnection), token efficiency (8K default output slot, tool result budgeting), API cost (prompt cache architecture, sticky latches), rendering throughput, and search speed (bitmap pre-filters)"
+    tags: [performance, optimization, startup, tokens, cost, caching, search]
+    keywords: [startup-latency, token-efficiency, API-cost, prompt-cache, sticky-latch, output-slot, tool-result-budget, context-window, 1M-context, bitmap-prefilter, fuzzy-search, profiling-checkpoints]
+    concepts: ["api-and-caching"]
+    category: guide
+    content_type: markdown
+    size: large
+    grep_hint: "grep -n '^## \\|^### ' FILE"
+    headings:
+      - anchor: "saving-milliseconds-at-startup"
+        title: "Saving Milliseconds at Startup"
+      - anchor: "saving-tokens-in-the-context-window"
+        title: "Saving Tokens in the Context Window"
+      - anchor: "saving-money-on-api-calls"
+        title: "Saving Money on API Calls"
+      - anchor: "apply-this"
+        title: "Apply This"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+  - id: "claude-code-from-source:ch18-epilogue.md"
+    source: claude-code-from-source
+    path: "ch18-epilogue.md"
+    title: "What We Learned"
+    summary: "Five architectural bets (generator loop, file-based memory, self-describing tools, fork cache sharing, hooks over plugins), patterns that transfer vs scale-specific patterns, complexity cost analysis, and future directions for agentic systems"
+    tags: [epilogue, lessons, architecture, patterns, future]
+    keywords: [architectural-bets, generator-loop, file-based-memory, self-describing-tools, fork-agents, hooks, MCP, multi-agent, prompt-cache, complexity, maintenance]
+    concepts: ["core-architecture"]
+    category: guide
+    content_type: markdown
+    size: standard
+    grep_hint: null
+    headings:
+      - anchor: "five-architectural-bets"
+        title: "Five Architectural Bets"
+      - anchor: "what-transfers-what-does-not"
+        title: "What Transfers, What Does Not"
+      - anchor: "the-cost-of-complexity"
+        title: "The Cost of Complexity"
+      - anchor: "where-agentic-systems-are-heading"
+        title: "Where Agentic Systems Are Heading"
+    links_to: []
+    links_from: []
+    frontmatter: {}
+    stale: false
+    stale_since: null
+    last_indexed: "2026-04-03T12:00:00Z"
+
+meta:
+  generated_at: "2026-04-03T12:00:00Z"
+  entry_count: 18

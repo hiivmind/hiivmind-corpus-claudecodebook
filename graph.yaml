@@ -1,0 +1,119 @@
+schema_version: 2
+
+concepts:
+  core-architecture:
+    label: "Core Architecture"
+    description: "The six abstractions, agent loop, two-tier state management, and the golden path from keystroke to output"
+    tags: ["architecture", "query-loop", "state", "agent-loop"]
+
+  tool-system:
+    label: "Tool System"
+    description: "Tool interface, 14-step execution pipeline, permission modes, and concurrent tool execution with streaming executor"
+    tags: ["tools", "permissions", "concurrency", "execution-pipeline"]
+
+  multi-agent:
+    label: "Multi-Agent"
+    description: "Sub-agent spawning, fork agents for cache sharing, task state machine, coordinator mode, and swarm teams"
+    tags: ["sub-agents", "fork-agents", "tasks", "coordination", "swarms"]
+
+  api-and-caching:
+    label: "API and Caching"
+    description: "Multi-provider client factory, prompt cache architecture with dynamic boundary, streaming, retry strategies, and performance optimization"
+    tags: ["api", "prompt-cache", "streaming", "performance", "cost"]
+
+  memory-and-persistence:
+    label: "Memory and Persistence"
+    description: "File-based memory with four-type taxonomy, LLM-powered recall via Sonnet side-query, staleness warnings, team memory, and KAIROS mode"
+    tags: ["memory", "persistence", "recall", "staleness"]
+
+  extensibility:
+    label: "Extensibility"
+    description: "Skills as two-phase markdown commands, hooks as lifecycle interceptors, MCP universal tool protocol with eight transports"
+    tags: ["skills", "hooks", "mcp", "plugins", "extensibility"]
+
+  terminal-and-input:
+    label: "Terminal and Input"
+    description: "Custom terminal renderer forked from Ink with 60fps rendering, five keyboard protocol parsers, keybinding system with 16 contexts"
+    tags: ["terminal-ui", "rendering", "input", "keybindings"]
+
+  remote-execution:
+    label: "Remote Execution"
+    description: "Four remote topologies: Bridge v1/v2, Direct Connect, and Upstream Proxy with credential injection in containers"
+    tags: ["remote", "cloud", "bridge", "websocket", "proxy"]
+
+  bootstrap:
+    label: "Bootstrap"
+    description: "Five-phase startup pipeline under 300ms budget with fast-path dispatch, trust boundary, and parallel setup"
+    tags: ["bootstrap", "startup", "initialization", "trust-boundary"]
+
+relationships:
+  - from: "core-architecture"
+    to: "tool-system"
+    type: "includes"
+    origin: "manual"
+    evidence: null
+
+  - from: "core-architecture"
+    to: "multi-agent"
+    type: "includes"
+    origin: "manual"
+    evidence: null
+
+  - from: "tool-system"
+    to: "multi-agent"
+    type: "depends-on"
+    origin: "manual"
+    evidence: null
+
+  - from: "multi-agent"
+    to: "api-and-caching"
+    type: "depends-on"
+    origin: "manual"
+    evidence: null
+
+  - from: "api-and-caching"
+    to: "core-architecture"
+    type: "depends-on"
+    origin: "manual"
+    evidence: null
+
+  - from: "extensibility"
+    to: "tool-system"
+    type: "extends"
+    origin: "manual"
+    evidence: null
+
+  - from: "extensibility"
+    to: "core-architecture"
+    type: "extends"
+    origin: "manual"
+    evidence: null
+
+  - from: "memory-and-persistence"
+    to: "core-architecture"
+    type: "depends-on"
+    origin: "manual"
+    evidence: null
+
+  - from: "terminal-and-input"
+    to: "core-architecture"
+    type: "depends-on"
+    origin: "manual"
+    evidence: null
+
+  - from: "remote-execution"
+    to: "core-architecture"
+    type: "extends"
+    origin: "manual"
+    evidence: null
+
+  - from: "bootstrap"
+    to: "core-architecture"
+    type: "depends-on"
+    origin: "manual"
+    evidence: null
+
+meta:
+  generated_at: "2026-04-03T12:00:00Z"
+  concept_count: 9
+  relationship_count: 11
